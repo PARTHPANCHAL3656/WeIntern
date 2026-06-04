@@ -1,6 +1,3 @@
-/* ─────────────────────────────────────────
-   IMPORTS
-───────────────────────────────────────── */
 @import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500;600&display=swap');
 
 /* ─────────────────────────────────────────
@@ -66,12 +63,21 @@ header {
   align-items: center;
   justify-content: space-between;
 }
-
+.nav-pfp {
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid var(--border);
+  display: inline-block;
+  justify-self: center;
+  align-items: center;
+}
 .nav-logo {
   font-family: var(--font-head);
   font-size: 1rem;
   color: var(--accent);
   letter-spacing: 0.02em;
+  display: inline-block;
 }
 
 .nav-links {
@@ -110,74 +116,17 @@ header {
 
 .nav-links a.active { color: var(--accent); }
 
-.hamburger {
-  display: none;
-  background: none;
-  border: 1px solid var(--border);
-  color: var(--text);
-  padding: 0.4rem 0.6rem;
-  border-radius: var(--radius);
-  font-size: 1.1rem;
-  transition: border-color 0.2s, color 0.2s;
-}
-
-.hamburger:hover { border-color: var(--accent); color: var(--accent); }
-
 /* ─────────────────────────────────────────
    FOOTER
 ───────────────────────────────────────── */
-footer {
-  border-top: 1px solid var(--border);
-  padding: 2.5rem 2rem;
-  margin-top: 6rem;
-}
-
-.footer-inner {
-  max-width: 1100px;
-  margin: 0 auto;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 1rem;
-}
-
-.footer-copy {
-  font-size: 0.8rem;
-  color: var(--text-muted);
-  font-family: var(--font-head);
-}
-
-.footer-nav {
-  display: flex;
-  gap: 1.5rem;
-}
-
-.footer-nav a {
-  font-size: 0.8rem;
-  color: var(--text-muted);
-  transition: color 0.2s;
-}
-
-.footer-nav a:hover { color: var(--accent); }
-
-.footer-social {
-  display: flex;
-  gap: 1rem;
-}
-
-.footer-social a {
-  font-size: 0.8rem;
-  font-family: var(--font-head);
-  color: var(--text-muted);
-  border: 1px solid var(--border);
-  padding: 0.3rem 0.75rem;
-  border-radius: var(--radius);
-  transition: color 0.2s, border-color 0.2s;
-}
-
-.footer-social a:hover { color: var(--accent); border-color: var(--border-accent); }
-
+footer { padding:32px 52px; border-top:1px solid var(--border); background:#040404; display:flex; align-items:center; justify-content:space-between; }
+    .f-left { display:flex; flex-direction:column; gap:6px; }
+    .f-name  { font-family:'JetBrains Mono',monospace; font-size:11px; font-weight:700; letter-spacing:0.18em; text-transform:uppercase; color:var(--white); }
+    .f-quote { font-family:'Lora',serif; font-size:12px; font-style:italic; color:var(--muted); }
+    .f-icons { display:flex; align-items:center; gap:20px; }
+    .f-icons a { color:var(--muted); transition:color .2s; display:flex; align-items:center; }
+    .f-icons a:hover { color:var(--accent); }
+    .f-icons svg { width:17px; height:17px; }
 /* ─────────────────────────────────────────
    LAYOUT UTILS
 ───────────────────────────────────────── */
