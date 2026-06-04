@@ -107,6 +107,19 @@ header {
 
 .nav-links a.active { color: var(--accent); }
 
+.hamburger {
+  display: none;
+  background: none;
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 0.4rem 0.6rem;
+  border-radius: var(--radius);
+  font-size: 1.1rem;
+  transition: border-color 0.2s, color 0.2s;
+}
+ 
+.hamburger:hover { border-color: var(--accent); color: var(--accent); }
+
 /* ─────────────────────────────────────────
    FOOTER
 ───────────────────────────────────────── */
@@ -282,25 +295,39 @@ footer { padding:32px 52px; border-top:1px solid var(--border); background:#0404
   flex-wrap: wrap;
 }
 
-.hero-scroll {
-  position: absolute;
-  bottom: 2.5rem; left: 50%;
-  transform: translateX(-50%);
-  font-family: var(--font-head);
-  font-size: 0.65rem;
-  color: var(--text-muted);
-  letter-spacing: 0.15em;
+/* ── HERO IMAGE ─────────────────────────── */
+.hero-inner {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  gap: 0.5rem;
-  animation: bounce 2s infinite;
+  justify-content: space-between;
+  gap: 4rem;
 }
 
-.hero-scroll::after {
-  content: '↓';
-  font-size: 0.9rem;
+.hero-content { flex: 1; }
+
+.hero-image {
+  flex-shrink: 0;
+  width: 260px;
+  height: 260px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 2px solid var(--border-accent);
+  box-shadow: 0 0 40px rgba(245, 166, 35, 0.1);
 }
+
+.hero-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+}
+
+/* Hide image on small screens so hero text isn't squished */
+@media (max-width: 640px) {
+  .hero-inner { flex-direction: column-reverse; gap: 2rem; }
+  .hero-image { width: 120px; height: 120px; }
+}
+
 
 @keyframes bounce {
   0%, 100% { transform: translateX(-50%) translateY(0); }

@@ -8,6 +8,7 @@ const navHTML = `
       <li><a href="projects.html">Projects</a></li>
       <li><a href="contact.html">Contact</a></li>
     </ul>
+    <button class="hamburger" id="hamburger" aria-label="Toggle navigation">&#9776;</button>
   </nav>
 </header>`;
 
@@ -58,25 +59,25 @@ const footerHTML = `
     </footer>`;
 
 // ── INJECT ───────────────────────────────────────────────────────────
-document.body.insertAdjacentHTML('afterbegin', navHTML);
-document.body.insertAdjacentHTML('beforeend', footerHTML);
+document.body.insertAdjacentHTML("afterbegin", navHTML);
+document.body.insertAdjacentHTML("beforeend", footerHTML);
 
 // ── HAMBURGER ────────────────────────────────────────────────────────
-document.getElementById('hamburger').addEventListener('click', () => {
-  document.getElementById('navLinks').classList.toggle('open');
+document.getElementById("hamburger").addEventListener("click", () => {
+  document.getElementById("navLinks").classList.toggle("open");
 });
 
 // Close nav when a link is clicked (mobile)
-document.querySelectorAll('.nav-links a').forEach(link => {
-  link.addEventListener('click', () => {
-    document.getElementById('navLinks').classList.remove('open');
+document.querySelectorAll(".nav-links a").forEach((link) => {
+  link.addEventListener("click", () => {
+    document.getElementById("navLinks").classList.remove("open");
   });
 });
 
 // ── ACTIVE NAV LINK ──────────────────────────────────────────────────
-const currentPage = window.location.pathname.split('/').pop() || 'index.html';
-document.querySelectorAll('.nav-links a').forEach(link => {
-  if (link.getAttribute('href') === currentPage) {
-    link.classList.add('active');
+const currentPage = window.location.pathname.split("/").pop() || "index.html";
+document.querySelectorAll(".nav-links a").forEach((link) => {
+  if (link.getAttribute("href") === currentPage) {
+    link.classList.add("active");
   }
 });
