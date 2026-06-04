@@ -8,6 +8,8 @@
   --radius: 8px;
   --font-head: 'Space Mono', monospace;
   --font-body: 'DM Sans', sans-serif;
+
+  --radius: 200px 
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -20,6 +22,12 @@ body {
 }
 
 h1, h2, h3 { font-family: var(--font-head); color: var(--accent); }
+
+index .html, about.html, projects.html, contact.html { padding: 100px 52px 32px; }
+
+/* index css here  */
+img { width:100%; max-width:200px; border-radius:var(--radius); box-shadow:0 4px 12px rgba(0,0,0,.5); }
+
 
 nav { position:fixed; top:0; left:0; right:0; z-index:200; display:flex; align-items:center; justify-content:space-between; padding:22px 52px; background:rgba(8,8,8,.85); backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px); border-bottom:1px solid transparent; transition:border-color .3s,padding .3s; }
     nav.stuck { border-bottom-color:var(--border); padding:16px 52px; }
