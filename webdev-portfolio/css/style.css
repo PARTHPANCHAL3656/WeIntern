@@ -63,21 +63,12 @@ header {
   align-items: center;
   justify-content: space-between;
 }
-.nav-pfp {
-  width: 32px; height: 32px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 1px solid var(--border);
-  display: inline-block;
-  justify-self: center;
-  align-items: center;
-}
+
 .nav-logo {
   font-family: var(--font-head);
   font-size: 1rem;
   color: var(--accent);
   letter-spacing: 0.02em;
-  display: inline-block;
 }
 
 .nav-links {

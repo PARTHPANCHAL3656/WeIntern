@@ -2,10 +2,7 @@
 const navHTML = `
 <header>
   <nav class="navbar">
-    <div>
-    <img src="assets/PFP.jpg" class="nav-pfp" />
     <a href="index.html" class="nav-logo">Parth Panchal</a>
-    </div>
     <ul class="nav-links" id="navLinks">
       <li><a href="index.html">Home</a></li>
       <li><a href="about.html">About</a></li>
