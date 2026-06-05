@@ -1,0 +1,1326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CapsuleHub — Your AI Context. Everywhere.</title>
+  <meta name="description" content="Capture AI conversations as Capsules. Instantly transfer context across ChatGPT, Claude, Gemini, DeepSeek and more. Never restate your goals again." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet" />
+  <style>
+    /* ─── TOKENS ─────────────────────────────────────────────── */
+    :root {
+      --bg:        #07060f;
+      --bg2:       #0d0c1a;
+      --bg3:       #12112a;
+      --surface:   #1a1836;
+      --border:    rgba(138,120,255,0.13);
+      --border2:   rgba(138,120,255,0.22);
+      --accent:    #7b5cfa;
+      --accent2:   #a78bfa;
+      --pill:      #6d4ef5;
+      --glow:      rgba(123,92,250,0.35);
+      --glow2:     rgba(123,92,250,0.12);
+      --text:      #e8e6f0;
+      --muted:     #9490b5;
+      --subtle:    #5c5880;
+      --white:     #ffffff;
+      --green:     #22d3a5;
+      --radius:    14px;
+      --radius-lg: 22px;
+      --fh1: clamp(2.6rem,5.5vw,4.4rem);
+      --fh2: clamp(1.9rem,3.8vw,3rem);
+      --fh3: clamp(1.25rem,2.2vw,1.65rem);
+      --fbody: 1rem;
+      --fsm: 0.875rem;
+      --gap: clamp(3rem,6vw,6rem);
+    }
+
+    /* ─── RESET ──────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    img { max-width: 100%; display: block; }
+    a { text-decoration: none; color: inherit; }
+    ul { list-style: none; }
+
+    /* ─── SCROLLBAR ──────────────────────────────────────────── */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 99px; }
+
+    /* ─── TYPOGRAPHY ─────────────────────────────────────────── */
+    h1,h2,h3,h4 { font-family: 'Syne', sans-serif; line-height: 1.15; }
+    h1 { font-size: var(--fh1); font-weight: 800; }
+    h2 { font-size: var(--fh2); font-weight: 700; }
+    h3 { font-size: var(--fh3); font-weight: 600; }
+    p { color: var(--muted); font-size: var(--fbody); }
+
+    /* ─── LAYOUT ─────────────────────────────────────────────── */
+    .container { max-width: 1160px; margin: 0 auto; padding: 0 clamp(1.25rem,4vw,2.5rem); }
+    section { padding: var(--gap) 0; }
+
+    /* ─── NOISE OVERLAY ──────────────────────────────────────── */
+    body::before {
+      content:'';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.035'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+      opacity: .4;
+    }
+    body > * { position: relative; z-index: 1; }
+
+    /* ─── BADGE ──────────────────────────────────────────────── */
+    .badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-family: 'Syne', sans-serif; font-size: 0.72rem; font-weight: 600;
+      letter-spacing: .08em; text-transform: uppercase;
+      padding: 5px 13px; border-radius: 99px;
+      background: linear-gradient(135deg,rgba(123,92,250,.18),rgba(167,139,250,.1));
+      border: 1px solid var(--border2);
+      color: var(--accent2);
+    }
+
+    /* ─── BUTTONS ─────────────────────────────────────────────── */
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-family: 'Syne', sans-serif; font-weight: 600; font-size: 0.92rem;
+      padding: 13px 26px; border-radius: 10px;
+      border: none; cursor: pointer; transition: all .22s ease;
+      white-space: nowrap;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--pill), #9b6dff);
+      color: #fff;
+      box-shadow: 0 4px 22px var(--glow);
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px var(--glow);
+      background: linear-gradient(135deg, #8b6cff, #b07dff);
+    }
+    .btn-ghost {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--border2);
+    }
+    .btn-ghost:hover {
+      background: rgba(123,92,250,.1);
+      border-color: var(--accent);
+      color: var(--white);
+    }
+    .btn-outline-accent {
+      background: transparent;
+      color: var(--accent2);
+      border: 1px solid var(--accent);
+    }
+    .btn-outline-accent:hover {
+      background: rgba(123,92,250,.15);
+    }
+
+    /* ─── NAV ─────────────────────────────────────────────────── */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      padding: 0 clamp(1.25rem,4vw,2.5rem);
+      background: rgba(7,6,15,.82);
+      backdrop-filter: blur(20px) saturate(1.4);
+      border-bottom: 1px solid var(--border);
+      transition: background .3s;
+    }
+    .nav-inner {
+      max-width: 1160px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 64px; gap: 2rem;
+    }
+    .nav-logo {
+      display: flex; align-items: center; gap: 10px;
+      font-family: 'Syne', sans-serif; font-size: 1.15rem; font-weight: 800;
+      color: var(--white); flex-shrink: 0;
+    }
+    .nav-logo-icon {
+      width: 34px; height: 34px; border-radius: 10px;
+      background: linear-gradient(135deg, var(--pill), #a78bfa);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem;
+    }
+    .nav-links {
+      display: flex; align-items: center; gap: 2rem;
+    }
+    .nav-links a {
+      font-size: 0.9rem; font-weight: 500; color: var(--muted);
+      transition: color .18s;
+    }
+    .nav-links a:hover { color: var(--white); }
+    .nav-cta { display: flex; align-items: center; gap: 10px; }
+    .hamburger {
+      display: none; flex-direction: column; gap: 5px;
+      cursor: pointer; padding: 4px; background: none; border: none;
+    }
+    .hamburger span {
+      display: block; width: 22px; height: 2px;
+      background: var(--text); border-radius: 2px; transition: all .25s;
+    }
+    .mobile-menu {
+      display: none; flex-direction: column;
+      padding: 1rem 0 1.5rem;
+      border-top: 1px solid var(--border);
+      gap: .25rem;
+    }
+    .mobile-menu a {
+      padding: .7rem 0; color: var(--muted); font-size: .95rem; font-weight: 500;
+    }
+    .mobile-menu a:hover { color: var(--white); }
+    .mobile-menu .btn { width: 100%; justify-content: center; margin-top: .75rem; }
+    .mobile-menu.open { display: flex; }
+
+    @media(max-width: 860px) {
+      .nav-links, .nav-cta { display: none; }
+      .hamburger { display: flex; }
+    }
+
+    /* ─── HERO ────────────────────────────────────────────────── */
+    #home {
+      padding: clamp(4rem,10vw,9rem) 0 clamp(3rem,7vw,7rem);
+      position: relative; overflow: hidden;
+    }
+    .hero-glow {
+      position: absolute; top: -120px; left: 50%; transform: translateX(-50%);
+      width: 900px; height: 600px; border-radius: 50%;
+      background: radial-gradient(ellipse,rgba(123,92,250,.22) 0%,transparent 70%);
+      pointer-events: none;
+    }
+    .hero-inner {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 4rem; align-items: center;
+    }
+    .hero-label { margin-bottom: 1.25rem; }
+    .hero-headline {
+      margin-bottom: 1.25rem;
+    }
+    .hero-headline em {
+      font-style: normal;
+      background: linear-gradient(135deg, var(--accent2), #c4b5fd);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero-sub {
+      font-size: 1.05rem; color: var(--muted); max-width: 480px;
+      margin-bottom: 2rem; line-height: 1.7;
+    }
+    .hero-btns { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+    .hero-trust {
+      margin-top: 2rem; display: flex; align-items: center; gap: 10px;
+      font-size: 0.82rem; color: var(--subtle);
+    }
+    .trust-dots { display: flex; gap: -4px; }
+    .trust-dot {
+      width: 26px; height: 26px; border-radius: 50%;
+      border: 2px solid var(--bg);
+      margin-left: -6px; background: linear-gradient(135deg,#a78bfa,#7b5cfa);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.65rem; font-weight: 700; color: #fff;
+    }
+
+    /* Hero Visual */
+    .hero-visual {
+      position: relative; height: 420px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .capsule-center {
+      position: absolute; z-index: 10;
+      width: 72px; height: 140px;
+      border-radius: 99px;
+      background: linear-gradient(160deg,#b69fff,#6d4ef5 50%,#3d1faa);
+      box-shadow: 0 0 60px rgba(123,92,250,.6), 0 0 120px rgba(123,92,250,.2);
+      animation: floatCapsule 3.5s ease-in-out infinite;
+    }
+    .capsule-center::after {
+      content:'';
+      position: absolute; inset: 3px;
+      border-radius: 99px;
+      background: linear-gradient(160deg,rgba(255,255,255,.25) 0%,transparent 50%);
+    }
+    @keyframes floatCapsule {
+      0%,100% { transform: translateY(0) rotate(-12deg); }
+      50% { transform: translateY(-14px) rotate(-12deg); }
+    }
+    .orbit {
+      position: absolute;
+      width: 320px; height: 320px;
+      border: 1px dashed rgba(123,92,250,.25);
+      border-radius: 50%;
+      animation: spin 18s linear infinite;
+    }
+    .orbit-2 {
+      width: 220px; height: 220px;
+      border-color: rgba(167,139,250,.18);
+      animation-duration: 11s;
+      animation-direction: reverse;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .ai-chip {
+      position: absolute;
+      display: flex; align-items: center; gap: 8px;
+      padding: 8px 14px; border-radius: 10px;
+      background: var(--surface);
+      border: 1px solid var(--border2);
+      font-family: 'Syne', sans-serif; font-size: 0.8rem; font-weight: 600;
+      color: var(--text); white-space: nowrap;
+      box-shadow: 0 8px 24px rgba(0,0,0,.35);
+      animation: fadeChip 4s ease-in-out infinite;
+    }
+    .ai-chip:nth-child(3) { top: 30px;  left: 15px;  animation-delay: 0s; }
+    .ai-chip:nth-child(4) { top: 30px;  right: 15px; animation-delay: .6s; }
+    .ai-chip:nth-child(5) { bottom: 55px; left: 5px;  animation-delay: 1.2s; }
+    .ai-chip:nth-child(6) { bottom: 55px; right: 5px;  animation-delay: 1.8s; }
+    .ai-chip:nth-child(7) { bottom: 160px; right: -20px; animation-delay: 2.4s; }
+    @keyframes fadeChip {
+      0%,100% { opacity:.7; transform: translateY(0); }
+      50% { opacity:1; transform: translateY(-4px); }
+    }
+    .chip-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+    }
+    .dot-green { background: #22d3a5; box-shadow: 0 0 6px #22d3a5; }
+    .dot-blue  { background: #60a5fa; box-shadow: 0 0 6px #60a5fa; }
+    .dot-pink  { background: #f472b6; box-shadow: 0 0 6px #f472b6; }
+    .dot-yellow{ background: #fbbf24; box-shadow: 0 0 6px #fbbf24; }
+    .dot-purple{ background: #a78bfa; box-shadow: 0 0 6px #a78bfa; }
+
+    .flow-line {
+      position: absolute;
+      pointer-events: none;
+      z-index: 5;
+    }
+    svg.lines {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      pointer-events: none; z-index: 5;
+      overflow: visible;
+    }
+    .flow-path {
+      stroke: url(#lineGrad);
+      stroke-width: 1.5;
+      fill: none;
+      stroke-dasharray: 6 5;
+      animation: dash 2.5s linear infinite;
+    }
+    @keyframes dash { to { stroke-dashoffset: -44; } }
+
+    @media(max-width: 860px) {
+      .hero-inner { grid-template-columns: 1fr; }
+      .hero-visual { display: none; }
+    }
+
+    /* ─── STATS BAR ──────────────────────────────────────────── */
+    .stats-bar {
+      background: var(--bg2);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 2rem 0;
+    }
+    .stats-inner {
+      display: flex; gap: 2rem; flex-wrap: wrap; justify-content: space-around;
+      align-items: center;
+    }
+    .stat { text-align: center; }
+    .stat-num {
+      font-family: 'Syne', sans-serif; font-size: 2rem; font-weight: 800;
+      background: linear-gradient(135deg, var(--white), var(--accent2));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .stat-label { font-size: .8rem; color: var(--subtle); margin-top: 2px; }
+    .stat-divider {
+      width: 1px; height: 40px; background: var(--border);
+    }
+    @media(max-width: 600px) { .stat-divider { display: none; } }
+
+    /* ─── PROBLEM ─────────────────────────────────────────────── */
+    .section-label { text-align: center; margin-bottom: 1rem; }
+    .section-title { text-align: center; margin-bottom: .75rem; }
+    .section-sub   { text-align: center; max-width: 580px; margin: 0 auto 3rem; font-size: 1rem; }
+
+    .pain-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem; margin-top: 3rem;
+    }
+    .pain-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 2rem;
+      transition: border-color .2s, transform .2s;
+    }
+    .pain-card:hover {
+      border-color: var(--border2);
+      transform: translateY(-3px);
+    }
+    .pain-icon {
+      font-size: 2rem; margin-bottom: 1rem;
+    }
+    .pain-card h3 { font-size: 1.1rem; margin-bottom: .5rem; color: var(--white); }
+    .pain-card p { font-size: .9rem; color: var(--muted); }
+
+    @media(max-width: 760px) { .pain-grid { grid-template-columns: 1fr; } }
+
+    /* ─── SOLUTION TIMELINE ──────────────────────────────────── */
+    #solution { background: var(--bg2); }
+    .steps {
+      display: grid; grid-template-columns: repeat(4,1fr);
+      gap: 1.5rem; margin-top: 3rem; position: relative;
+    }
+    .steps::before {
+      content:'';
+      position: absolute; top: 36px; left: 12.5%; right: 12.5%;
+      height: 2px;
+      background: linear-gradient(90deg,transparent,var(--accent),transparent);
+      pointer-events: none;
+    }
+    .step-card {
+      text-align: center; padding: 1.75rem 1.25rem;
+      background: var(--bg3); border: 1px solid var(--border);
+      border-radius: var(--radius-lg); position: relative;
+    }
+    .step-num {
+      width: 48px; height: 48px; border-radius: 50%;
+      background: linear-gradient(135deg,var(--pill),#a78bfa);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Syne',sans-serif; font-size: .85rem; font-weight: 800;
+      color: #fff; margin: 0 auto 1.1rem;
+      box-shadow: 0 0 20px var(--glow);
+    }
+    .step-card h3 { font-size: 1rem; margin-bottom: .5rem; color: var(--white); }
+    .step-card p { font-size: .85rem; }
+
+    @media(max-width: 760px) {
+      .steps { grid-template-columns: repeat(2,1fr); }
+      .steps::before { display: none; }
+    }
+    @media(max-width: 480px) { .steps { grid-template-columns: 1fr; } }
+
+    /* ─── FEATURES ───────────────────────────────────────────── */
+    .features-grid {
+      display: grid; grid-template-columns: repeat(3,1fr);
+      gap: 1.5rem; margin-top: 3rem;
+    }
+    .feat-card {
+      padding: 1.75rem;
+      background: var(--bg2); border: 1px solid var(--border);
+      border-radius: var(--radius-lg); cursor: default;
+      transition: border-color .2s, box-shadow .2s, transform .2s;
+      position: relative; overflow: hidden;
+    }
+    .feat-card::before {
+      content:'';
+      position: absolute; inset: 0;
+      background: radial-gradient(circle at 0 0,rgba(123,92,250,.07),transparent 60%);
+      opacity: 0; transition: opacity .3s;
+    }
+    .feat-card:hover::before { opacity: 1; }
+    .feat-card:hover {
+      border-color: var(--accent);
+      box-shadow: 0 0 28px var(--glow2);
+      transform: translateY(-4px);
+    }
+    .feat-icon {
+      font-size: 1.65rem; margin-bottom: 1rem;
+      width: 52px; height: 52px; border-radius: 12px;
+      background: rgba(123,92,250,.12);
+      display: flex; align-items: center; justify-content: center;
+      border: 1px solid var(--border2);
+    }
+    .feat-card h3 { font-size: 1rem; margin-bottom: .45rem; color: var(--white); }
+    .feat-card p { font-size: .875rem; }
+
+    @media(max-width: 860px) { .features-grid { grid-template-columns: repeat(2,1fr); } }
+    @media(max-width: 520px) { .features-grid { grid-template-columns: 1fr; } }
+
+    /* ─── INTEGRATIONS ───────────────────────────────────────── */
+    #integrations { background: var(--bg2); }
+    .integrations-hub {
+      position: relative; margin-top: 3rem;
+      height: 340px; display: flex;
+      align-items: center; justify-content: center;
+    }
+    .hub-center {
+      position: relative; z-index: 10;
+      width: 88px; height: 88px; border-radius: 50%;
+      background: linear-gradient(135deg,#7b5cfa,#a78bfa);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 2rem;
+      box-shadow: 0 0 50px var(--glow), 0 0 100px rgba(123,92,250,.15);
+    }
+    .hub-ring {
+      position: absolute;
+      border: 1px dashed rgba(123,92,250,.2);
+      border-radius: 50%;
+      animation: spin 20s linear infinite;
+    }
+    .hub-ring-1 { width: 280px; height: 280px; }
+    .hub-ring-2 { width: 200px; height: 200px; animation-direction: reverse; animation-duration: 14s; }
+    .integration-chip {
+      position: absolute;
+      display: flex; align-items: center; gap: 8px;
+      padding: 10px 16px; border-radius: 12px;
+      background: var(--surface); border: 1px solid var(--border2);
+      font-family: 'Syne',sans-serif; font-size: .82rem; font-weight: 600;
+      color: var(--text); white-space: nowrap;
+      box-shadow: 0 6px 20px rgba(0,0,0,.4);
+      transition: transform .2s, box-shadow .2s;
+    }
+    .integration-chip:hover {
+      transform: scale(1.06);
+      box-shadow: 0 8px 28px var(--glow2);
+    }
+    .int-1 { top: 20px;  left: 50%; transform: translateX(-50%); }
+    .int-2 { top: 60px;  right: 80px; }
+    .int-3 { top: 60px;  left: 80px; }
+    .int-4 { bottom: 50px; left: 50%; transform: translateX(-50%); }
+    .int-5 { bottom: 100px; right: 60px; }
+    .int-6 { bottom: 100px; left: 60px; }
+    .int-emoji { font-size: 1.1rem; }
+
+    @media(max-width: 600px) {
+      .integrations-hub { height: auto; flex-direction: column; gap: 1rem; align-items: flex-start; }
+      .hub-center, .hub-ring { display: none; }
+      .integration-chip { position: static; transform: none !important; }
+    }
+
+    /* ─── PRICING ─────────────────────────────────────────────── */
+    .pricing-toggle {
+      display: flex; align-items: center; gap: 12px;
+      justify-content: center; margin-bottom: 3rem;
+    }
+    .toggle-label { font-size: .9rem; font-weight: 500; color: var(--muted); }
+    .toggle-switch {
+      width: 48px; height: 26px; border-radius: 99px;
+      background: var(--surface); border: 1px solid var(--border2);
+      cursor: pointer; position: relative; transition: background .2s;
+    }
+    .toggle-switch.active { background: var(--accent); }
+    .toggle-knob {
+      position: absolute; top: 3px; left: 3px;
+      width: 18px; height: 18px; border-radius: 50%;
+      background: #fff; transition: transform .2s;
+    }
+    .toggle-switch.active .toggle-knob { transform: translateX(22px); }
+    .save-badge {
+      font-size: .72rem; font-weight: 600; color: var(--green);
+      background: rgba(34,211,165,.12); border: 1px solid rgba(34,211,165,.25);
+      padding: 3px 8px; border-radius: 99px;
+    }
+
+    .pricing-grid {
+      display: grid; grid-template-columns: repeat(3,1fr);
+      gap: 1.5rem;
+    }
+    .price-card {
+      border-radius: var(--radius-lg); padding: 2rem;
+      background: var(--bg2); border: 1px solid var(--border);
+      display: flex; flex-direction: column; gap: .75rem;
+      transition: border-color .2s, transform .2s;
+      position: relative; overflow: hidden;
+    }
+    .price-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--border2);
+    }
+    .price-card.popular {
+      border-color: var(--accent);
+      background: linear-gradient(160deg,rgba(123,92,250,.08),var(--bg2));
+      box-shadow: 0 0 40px var(--glow2);
+    }
+    .popular-badge {
+      position: absolute; top: 16px; right: 16px;
+      font-family: 'Syne',sans-serif; font-size: .7rem; font-weight: 700;
+      padding: 4px 10px; border-radius: 99px;
+      background: var(--accent); color: #fff;
+      letter-spacing: .04em;
+    }
+    .price-plan { font-family: 'Syne',sans-serif; font-size: 1rem; font-weight: 700; color: var(--white); }
+    .price-val {
+      display: flex; align-items: baseline; gap: 4px;
+      font-family: 'Syne',sans-serif;
+    }
+    .price-val .amount { font-size: 2.8rem; font-weight: 800; color: var(--white); }
+    .price-val .period { font-size: .9rem; color: var(--subtle); }
+    .price-desc { font-size: .85rem; color: var(--muted); }
+    .price-divider { height: 1px; background: var(--border); margin: .5rem 0; }
+    .price-features { list-style: none; display: flex; flex-direction: column; gap: .6rem; flex: 1; }
+    .price-features li {
+      display: flex; align-items: center; gap: 10px;
+      font-size: .875rem; color: var(--muted);
+    }
+    .price-features li::before {
+      content: '✓'; color: var(--accent2); font-weight: 700;
+      flex-shrink: 0;
+    }
+    .price-card .btn { width: 100%; justify-content: center; margin-top: auto; }
+
+    @media(max-width: 860px) { .pricing-grid { grid-template-columns: 1fr; max-width: 440px; margin: 0 auto; } }
+
+    /* ─── TESTIMONIALS ───────────────────────────────────────── */
+    #testimonials { background: var(--bg2); }
+    .testi-grid {
+      display: grid; grid-template-columns: repeat(3,1fr);
+      gap: 1.5rem; margin-top: 3rem;
+    }
+    .testi-card {
+      background: var(--bg3); border: 1px solid var(--border);
+      border-radius: var(--radius-lg); padding: 1.75rem;
+      transition: border-color .2s, transform .2s;
+    }
+    .testi-card:hover {
+      border-color: var(--border2); transform: translateY(-3px);
+    }
+    .testi-stars { color: #fbbf24; font-size: .85rem; margin-bottom: .75rem; }
+    .testi-text { font-size: .9rem; color: var(--muted); line-height: 1.7; margin-bottom: 1.25rem; font-style: italic; }
+    .testi-author { display: flex; align-items: center; gap: 12px; }
+    .testi-avatar {
+      width: 42px; height: 42px; border-radius: 50%;
+      background: linear-gradient(135deg, #7b5cfa, #a78bfa);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Syne',sans-serif; font-size: .9rem; font-weight: 700; color: #fff;
+      flex-shrink: 0;
+    }
+    .testi-name { font-family: 'Syne',sans-serif; font-size: .9rem; font-weight: 600; color: var(--white); }
+    .testi-role { font-size: .78rem; color: var(--subtle); }
+
+    @media(max-width: 860px) { .testi-grid { grid-template-columns: 1fr; } }
+
+    /* ─── CONTACT ─────────────────────────────────────────────── */
+    .contact-wrap {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 4rem; align-items: start; margin-top: 3rem;
+    }
+    .contact-info h3 { margin-bottom: 1rem; color: var(--white); }
+    .contact-info p { margin-bottom: 1.5rem; }
+    .contact-items { display: flex; flex-direction: column; gap: 1rem; }
+    .contact-item {
+      display: flex; align-items: center; gap: 14px;
+      padding: 1rem 1.25rem; border-radius: var(--radius);
+      background: var(--bg2); border: 1px solid var(--border);
+    }
+    .contact-item-icon {
+      font-size: 1.2rem; width: 40px; height: 40px; border-radius: 10px;
+      background: rgba(123,92,250,.12); display: flex;
+      align-items: center; justify-content: center; flex-shrink: 0;
+    }
+    .contact-item-text { font-size: .875rem; color: var(--muted); }
+    .contact-item-title { font-size: .8rem; font-weight: 600; color: var(--white); margin-bottom: 2px; font-family: 'Syne',sans-serif; }
+
+    .contact-form {
+      background: var(--bg2); border: 1px solid var(--border);
+      border-radius: var(--radius-lg); padding: 2rem;
+    }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .form-group { display: flex; flex-direction: column; gap: 6px; margin-bottom: 1rem; }
+    .form-group label { font-size: .8rem; font-weight: 600; color: var(--muted); font-family: 'Syne',sans-serif; letter-spacing: .04em; text-transform: uppercase; }
+    .form-group input,
+    .form-group textarea {
+      background: var(--bg3); border: 1px solid var(--border);
+      color: var(--text); font-family: 'DM Sans',sans-serif; font-size: .9rem;
+      padding: 11px 14px; border-radius: 10px; outline: none;
+      transition: border-color .2s, box-shadow .2s;
+      resize: vertical;
+    }
+    .form-group input:focus,
+    .form-group textarea:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(123,92,250,.15);
+    }
+    .form-group input::placeholder,
+    .form-group textarea::placeholder { color: var(--subtle); }
+    .form-submit .btn { width: 100%; justify-content: center; }
+    .form-success {
+      display: none; text-align: center; padding: 1rem;
+      color: var(--green); font-size: .9rem; font-weight: 600;
+    }
+
+    @media(max-width: 760px) {
+      .contact-wrap { grid-template-columns: 1fr; gap: 2rem; }
+      .form-row { grid-template-columns: 1fr; }
+    }
+
+    /* ─── FINAL CTA ──────────────────────────────────────────── */
+    .final-cta {
+      text-align: center;
+      padding: clamp(4rem,8vw,8rem) 0;
+      position: relative; overflow: hidden;
+    }
+    .final-cta::before {
+      content:'';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 50% 50%, rgba(123,92,250,.14) 0%, transparent 65%);
+      pointer-events: none;
+    }
+    .final-cta h2 { max-width: 700px; margin: 0 auto 1rem; }
+    .final-cta p { max-width: 520px; margin: 0 auto 2.5rem; font-size: 1.05rem; }
+    .final-cta-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+    .cta-note {
+      margin-top: 1.25rem; font-size: .8rem; color: var(--subtle);
+    }
+
+    /* ─── FOOTER ─────────────────────────────────────────────── */
+    footer {
+      background: var(--bg2);
+      border-top: 1px solid var(--border);
+      padding: 3rem 0 2rem;
+    }
+    .footer-top {
+      display: grid; grid-template-columns: 1.6fr 1fr 1fr 1fr;
+      gap: 3rem; margin-bottom: 3rem;
+    }
+    .footer-brand p { font-size: .875rem; color: var(--muted); margin-top: .75rem; max-width: 260px; }
+    .footer-col h4 {
+      font-family: 'Syne',sans-serif; font-size: .82rem; font-weight: 700;
+      color: var(--white); letter-spacing: .06em; text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+    .footer-col ul { display: flex; flex-direction: column; gap: .55rem; }
+    .footer-col ul li a {
+      font-size: .875rem; color: var(--muted); transition: color .18s;
+    }
+    .footer-col ul li a:hover { color: var(--white); }
+    .footer-bottom {
+      border-top: 1px solid var(--border); padding-top: 1.5rem;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 1rem;
+    }
+    .footer-copy { font-size: .8rem; color: var(--subtle); }
+    .social-links { display: flex; gap: .75rem; }
+    .social-link {
+      width: 36px; height: 36px; border-radius: 9px;
+      background: var(--bg3); border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem; transition: border-color .2s, background .2s;
+    }
+    .social-link:hover { border-color: var(--accent); background: rgba(123,92,250,.12); }
+
+    @media(max-width: 760px) {
+      .footer-top { grid-template-columns: 1fr 1fr; gap: 2rem; }
+    }
+    @media(max-width: 440px) {
+      .footer-top { grid-template-columns: 1fr; }
+    }
+
+    /* ─── SCROLL REVEAL ──────────────────────────────────────── */
+    .reveal {
+      opacity: 0; transform: translateY(28px);
+      transition: opacity .6s ease, transform .6s ease;
+    }
+    .reveal.visible { opacity: 1; transform: none; }
+    .reveal-delay-1 { transition-delay: .1s; }
+    .reveal-delay-2 { transition-delay: .2s; }
+    .reveal-delay-3 { transition-delay: .3s; }
+    .reveal-delay-4 { transition-delay: .4s; }
+  </style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════════════ NAV -->
+<nav id="navbar">
+  <div class="nav-inner">
+    <a href="#" class="nav-logo">
+      <div class="nav-logo-icon">💊</div>
+      CapsuleHub
+    </a>
+    <ul class="nav-links">
+      <li><a href="#home">Home</a></li>
+      <li><a href="#features">Features</a></li>
+      <li><a href="#pricing">Pricing</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <div class="nav-cta">
+      <a href="https://chromewebstore.google.com/detail/capsule-hub-by-tilantra/ngeoeefidomejcdhiecidpaalfoekjbh" target="_blank" class="btn btn-primary">Install Extension</a>
+    </div>
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <div class="container">
+    <div class="mobile-menu" id="mobileMenu">
+      <a href="#home">Home</a>
+      <a href="#features">Features</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#contact">Contact</a>
+      <a href="https://chromewebstore.google.com/detail/capsule-hub-by-tilantra/ngeoeefidomejcdhiecidpaalfoekjbh" target="_blank" class="btn btn-primary">Install Extension</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ══════════════════════════════════════════════════════ HERO -->
+<section id="home">
+  <div class="hero-glow"></div>
+  <div class="container">
+    <div class="hero-inner">
+
+      <div class="hero-content">
+        <div class="hero-label">
+          <span class="badge">✨ Context Transfer for AI Workflows</span>
+        </div>
+        <h1 class="hero-headline reveal">
+          Your AI Context.<br><em>Everywhere.</em>
+        </h1>
+        <p class="hero-sub reveal reveal-delay-1">
+          Capture conversations as Capsules and instantly transfer project knowledge across ChatGPT, Claude, Gemini, DeepSeek, and more. Never restate your goals again.
+        </p>
+        <div class="hero-btns reveal reveal-delay-2">
+          <a href="https://chromewebstore.google.com/detail/capsule-hub-by-tilantra/ngeoeefidomejcdhiecidpaalfoekjbh" target="_blank" class="btn btn-primary">
+            ⚡ Install Extension
+          </a>
+          <a href="#features" class="btn btn-ghost">See How It Works</a>
+        </div>
+        <div class="hero-trust reveal reveal-delay-3">
+          <div class="trust-dots">
+            <div class="trust-dot">A</div>
+            <div class="trust-dot" style="background:linear-gradient(135deg,#60a5fa,#34d399)">B</div>
+            <div class="trust-dot" style="background:linear-gradient(135deg,#f472b6,#fb923c)">C</div>
+            <div class="trust-dot" style="background:linear-gradient(135deg,#34d399,#22d3a5)">D</div>
+          </div>
+          <span>Trusted by <strong style="color:var(--text)">25,000+</strong> AI power users worldwide</span>
+        </div>
+      </div>
+
+      <div class="hero-visual">
+        <!-- SVG lines connecting chips to capsule -->
+        <svg class="lines" viewBox="0 0 420 420" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="lineGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#7b5cfa" stop-opacity="0"/>
+              <stop offset="50%" stop-color="#a78bfa" stop-opacity=".7"/>
+              <stop offset="100%" stop-color="#7b5cfa" stop-opacity="0"/>
+            </linearGradient>
+          </defs>
+          <path class="flow-path" d="M100,90 Q200,150 210,210"/>
+          <path class="flow-path" d="M320,90 Q240,150 210,210" style="animation-delay:.5s"/>
+          <path class="flow-path" d="M60,250 Q140,240 210,210" style="animation-delay:1s"/>
+          <path class="flow-path" d="M360,250 Q280,240 210,210" style="animation-delay:1.5s"/>
+          <path class="flow-path" d="M360,170 Q290,200 210,210" style="animation-delay:2s"/>
+        </svg>
+
+        <div class="orbit"></div>
+        <div class="orbit orbit-2"></div>
+        <div class="capsule-center"></div>
+
+        <div class="ai-chip"><span class="chip-dot dot-green"></span>ChatGPT</div>
+        <div class="ai-chip"><span class="chip-dot dot-blue"></span>Claude</div>
+        <div class="ai-chip"><span class="chip-dot dot-yellow"></span>Gemini</div>
+        <div class="ai-chip"><span class="chip-dot dot-pink"></span>DeepSeek</div>
+        <div class="ai-chip"><span class="chip-dot dot-purple"></span>Notion</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════ STATS -->
+<div class="stats-bar">
+  <div class="container">
+    <div class="stats-inner">
+      <div class="stat reveal">
+        <div class="stat-num">25K+</div>
+        <div class="stat-label">Active Users</div>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat reveal reveal-delay-1">
+        <div class="stat-num">2M+</div>
+        <div class="stat-label">Capsules Created</div>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat reveal reveal-delay-2">
+        <div class="stat-num">6+</div>
+        <div class="stat-label">AI Platforms Supported</div>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat reveal reveal-delay-3">
+        <div class="stat-num">4.0★</div>
+        <div class="stat-label">Chrome Store Rating</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════ PROBLEM -->
+<section id="problem">
+  <div class="container">
+    <div class="section-label reveal">
+      <span class="badge">⚠️ The Problem</span>
+    </div>
+    <h2 class="section-title reveal reveal-delay-1">Context Switching Kills Productivity</h2>
+    <p class="section-sub reveal reveal-delay-2">Every time you switch AI tools, you lose hours rebuilding context from scratch. Your best thinking vanishes between platforms.</p>
+
+    <div class="pain-grid">
+      <div class="pain-card reveal">
+        <div class="pain-icon">🔁</div>
+        <h3>Repeating Yourself</h3>
+        <p>Every new AI session starts with a blank slate. You spend 20 minutes re-explaining project goals before getting to the real work.</p>
+      </div>
+      <div class="pain-card reveal reveal-delay-1">
+        <div class="pain-icon">💨</div>
+        <h3>Lost Knowledge</h3>
+        <p>Critical insights, constraints, and decisions are buried in chat logs no one revisits. Valuable AI-generated context disappears forever.</p>
+      </div>
+      <div class="pain-card reveal reveal-delay-2">
+        <div class="pain-icon">🧩</div>
+        <h3>Fragmented Workflows</h3>
+        <p>Information gets siloed inside different AI tools. Your ChatGPT brainstorm can't talk to your Claude code session or Gemini research.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════ SOLUTION -->
+<section id="solution">
+  <div class="container">
+    <div class="section-label reveal">
+      <span class="badge">💡 The Solution</span>
+    </div>
+    <h2 class="section-title reveal reveal-delay-1">Capture Once. Reuse Everywhere.</h2>
+    <p class="section-sub reveal reveal-delay-2">Four steps is all it takes to turn fragmented AI conversations into a portable, searchable knowledge layer that follows you everywhere.</p>
+
+    <div class="steps">
+      <div class="step-card reveal">
+        <div class="step-num">01</div>
+        <h3>Capture Conversation</h3>
+        <p>One click saves the full context, goals, and outcomes from any AI chat into a structured Capsule.</p>
+      </div>
+      <div class="step-card reveal reveal-delay-1">
+        <div class="step-num">02</div>
+        <h3>Generate Capsule</h3>
+        <p>CapsuleHub distills the conversation into a reusable context block — searchable, versionable, shareable.</p>
+      </div>
+      <div class="step-card reveal reveal-delay-2">
+        <div class="step-num">03</div>
+        <h3>Store in Workspace</h3>
+        <p>Organise Capsules by project, team, or tag. Your entire AI knowledge base in one clean sidebar.</p>
+      </div>
+      <div class="step-card reveal reveal-delay-3">
+        <div class="step-num">04</div>
+        <h3>Inject Into Any AI</h3>
+        <p>Drag and drop any Capsule into ChatGPT, Claude, Gemini or DeepSeek. Instant full context transfer.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════ FEATURES -->
+<section id="features">
+  <div class="container">
+    <div class="section-label reveal">
+      <span class="badge">🚀 Features</span>
+    </div>
+    <h2 class="section-title reveal reveal-delay-1">Everything Your AI Workflow Needs</h2>
+    <p class="section-sub reveal reveal-delay-2">Built for power users and teams who work across multiple AI platforms and need their context to keep up.</p>
+
+    <div class="features-grid">
+      <div class="feat-card reveal">
+        <div class="feat-icon">⚡</div>
+        <h3>One-Click Capture</h3>
+        <p>Save entire AI conversations instantly with a single click. No copying, no pasting, no friction.</p>
+      </div>
+      <div class="feat-card reveal reveal-delay-1">
+        <div class="feat-icon">🔀</div>
+        <h3>Cross-AI Transfer</h3>
+        <p>Move context seamlessly between ChatGPT, Claude, Gemini, DeepSeek, and more via drag-and-drop injection.</p>
+      </div>
+      <div class="feat-card reveal reveal-delay-2">
+        <div class="feat-icon">👥</div>
+        <h3>Team Workspaces</h3>
+        <p>Create team folders for Engineering, Marketing, Product — everyone stays aligned without Slack overload.</p>
+      </div>
+      <div class="feat-card reveal reveal-delay-1">
+        <div class="feat-icon">🕰️</div>
+        <h3>Version History</h3>
+        <p>Track how context evolves over time. Roll back to previous versions or branch off in new directions.</p>
+      </div>
+      <div class="feat-card reveal reveal-delay-2">
+        <div class="feat-icon">📎</div>
+        <h3>Attachment Support</h3>
+        <p>Store PDFs, Docs, images, spreadsheets, and code snippets alongside your capsules. 20+ file types supported.</p>
+      </div>
+      <div class="feat-card reveal reveal-delay-3">
+        <div class="feat-icon">🔍</div>
+        <h3>Smart Search</h3>
+        <p>Find any context in seconds with full-text search across names, tags, teams, and capsule content.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════ INTEGRATIONS -->
+<section id="integrations">
+  <div class="container">
+    <div class="section-label reveal">
+      <span class="badge">🔗 Integrations</span>
+    </div>
+    <h2 class="section-title reveal reveal-delay-1">Works Where You Already Work</h2>
+    <p class="section-sub reveal reveal-delay-2">CapsuleHub sits at the center of your AI toolkit, connecting every tool you rely on into one seamless context layer.</p>
+
+    <div class="integrations-hub reveal">
+      <div class="hub-ring hub-ring-1"></div>
+      <div class="hub-ring hub-ring-2"></div>
+      <div class="hub-center">💊</div>
+
+      <div class="integration-chip int-1"><span class="int-emoji">🤖</span> ChatGPT</div>
+      <div class="integration-chip int-2"><span class="int-emoji">🌟</span> Claude</div>
+      <div class="integration-chip int-3"><span class="int-emoji">✨</span> Gemini</div>
+      <div class="integration-chip int-4"><span class="int-emoji">🔷</span> DeepSeek</div>
+      <div class="integration-chip int-5"><span class="int-emoji">📧</span> Gmail</div>
+      <div class="integration-chip int-6"><span class="int-emoji">📝</span> Notion</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════ PRICING -->
+<section id="pricing">
+  <div class="container">
+    <div class="section-label reveal">
+      <span class="badge">💰 Pricing</span>
+    </div>
+    <h2 class="section-title reveal reveal-delay-1">Simple, Transparent Pricing</h2>
+    <p class="section-sub reveal reveal-delay-2">Start free, scale as your team grows. No surprise charges, no feature gates on the things that matter.</p>
+
+    <div class="pricing-toggle reveal">
+      <span class="toggle-label">Monthly</span>
+      <div class="toggle-switch" id="billingToggle">
+        <div class="toggle-knob"></div>
+      </div>
+      <span class="toggle-label">Yearly</span>
+      <span class="save-badge" id="saveBadge">Save 30%</span>
+    </div>
+
+    <div class="pricing-grid">
+      <!-- Starter -->
+      <div class="price-card reveal">
+        <div class="price-plan">Starter</div>
+        <div class="price-val">
+          <span class="amount" data-monthly="0" data-yearly="0">$0</span>
+          <span class="period">/month</span>
+        </div>
+        <p class="price-desc">Perfect for individuals getting started with AI workflows.</p>
+        <div class="price-divider"></div>
+        <ul class="price-features">
+          <li>20 Capsules per month</li>
+          <li>Basic full-text search</li>
+          <li>Chrome extension access</li>
+          <li>1 AI platform integration</li>
+          <li>Community support</li>
+        </ul>
+        <a href="https://chromewebstore.google.com/detail/capsule-hub-by-tilantra/ngeoeefidomejcdhiecidpaalfoekjbh" target="_blank" class="btn btn-ghost">Get Started Free</a>
+      </div>
+
+      <!-- Pro (popular) -->
+      <div class="price-card popular reveal reveal-delay-1">
+        <div class="popular-badge">Most Popular</div>
+        <div class="price-plan">Pro</div>
+        <div class="price-val">
+          <span class="amount" data-monthly="12" data-yearly="8">$12</span>
+          <span class="period">/month</span>
+        </div>
+        <p class="price-desc">For power users who live across multiple AI platforms.</p>
+        <div class="price-divider"></div>
+        <ul class="price-features">
+          <li>Unlimited Capsules</li>
+          <li>Cross-AI context transfer</li>
+          <li>Full version history</li>
+          <li>Attachment support (20+ types)</li>
+          <li>All AI platform integrations</li>
+          <li>Priority email support</li>
+        </ul>
+        <a href="https://chromewebstore.google.com/detail/capsule-hub-by-tilantra/ngeoeefidomejcdhiecidpaalfoekjbh" target="_blank" class="btn btn-primary">Start Free Trial</a>
+      </div>
+
+      <!-- Team -->
+      <div class="price-card reveal reveal-delay-2">
+        <div class="price-plan">Team</div>
+        <div class="price-val">
+          <span class="amount" data-monthly="29" data-yearly="19">$29</span>
+          <span class="period">/month</span>
+        </div>
+        <p class="price-desc">For teams shipping faster with shared AI context.</p>
+        <div class="price-divider"></div>
+        <ul class="price-features">
+          <li>Everything in Pro</li>
+          <li>Shared team workspaces</li>
+          <li>Granular team permissions</li>
+          <li>Advanced analytics dashboard</li>
+          <li>Batch email integration</li>
+          <li>Dedicated priority support</li>
+          <li>Custom onboarding</li>
+        </ul>
+        <a href="#contact" class="btn btn-outline-accent">Contact Sales</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════ TESTIMONIALS -->
+<section id="testimonials">
+  <div class="container">
+    <div class="section-label reveal">
+      <span class="badge">💬 Testimonials</span>
+    </div>
+    <h2 class="section-title reveal reveal-delay-1">Used by People Who Actually Build with AI</h2>
+    <p class="section-sub reveal reveal-delay-2">Real feedback from engineers, PMs, and founders who've stopped rebuilding context from scratch.</p>
+
+    <div class="testi-grid">
+      <div class="testi-card reveal">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-text">"I bounce between Claude for writing system prompts, ChatGPT for debugging, and Gemini for research. CapsuleHub is the only thing that keeps all of that coherent. It's genuinely cut my context-switching overhead in half."</p>
+        <div class="testi-author">
+          <div class="testi-avatar">RA</div>
+          <div>
+            <div class="testi-name">Rohan Agarwal</div>
+            <div class="testi-role">Senior AI Engineer, Bangalore</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testi-card reveal reveal-delay-1">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-text">"My team was wasting 30 minutes per standup because no one had the same context on our AI-assisted features. We set up a Team workspace, pinned our product capsules, and that problem vanished completely."</p>
+        <div class="testi-author">
+          <div class="testi-avatar" style="background:linear-gradient(135deg,#22d3a5,#3b82f6)">PL</div>
+          <div>
+            <div class="testi-name">Priya Lakshmi</div>
+            <div class="testi-role">Product Manager, Series B Startup</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testi-card reveal reveal-delay-2">
+        <div class="testi-stars">★★★★☆</div>
+        <p class="testi-text">"We use 4 different AI tools depending on the task. Before CapsuleHub, every handoff was a 20-minute re-briefing. Now it's a drag, a drop, and done. The ROI was obvious in the first week."</p>
+        <div class="testi-author">
+          <div class="testi-avatar" style="background:linear-gradient(135deg,#f472b6,#fb923c)">MK</div>
+          <div>
+            <div class="testi-name">Marcus Kowalski</div>
+            <div class="testi-role">Founder & CTO, AI-first SaaS</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════ CONTACT -->
+<section id="contact">
+  <div class="container">
+    <div class="section-label reveal">
+      <span class="badge">📩 Get in Touch</span>
+    </div>
+    <h2 class="section-title reveal reveal-delay-1">We'd Love to Hear From You</h2>
+    <p class="section-sub reveal reveal-delay-2">Questions about pricing, enterprise plans, or custom integrations? Drop us a message.</p>
+
+    <div class="contact-wrap">
+      <div class="contact-info reveal">
+        <h3>Talk to the team</h3>
+        <p>Whether you're evaluating CapsuleHub for your team, hitting a bug, or want to discuss a partnership — we respond to everything.</p>
+        <div class="contact-items">
+          <div class="contact-item">
+            <div class="contact-item-icon">📧</div>
+            <div>
+              <div class="contact-item-title">Email</div>
+              <div class="contact-item-text">hello@capsulehub.ai</div>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-item-icon">🌐</div>
+            <div>
+              <div class="contact-item-title">Website</div>
+              <div class="contact-item-text">capsulehub.ai</div>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-item-icon">⏱️</div>
+            <div>
+              <div class="contact-item-title">Response Time</div>
+              <div class="contact-item-text">Usually within 24 hours</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="contact-form reveal reveal-delay-1">
+        <form id="contactForm" novalidate>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="name">Name</label>
+              <input type="text" id="name" name="name" placeholder="Your full name" required minlength="2" />
+            </div>
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input type="email" id="email" name="email" placeholder="you@company.com" required />
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="phone">Phone (optional)</label>
+            <input type="tel" id="phone" name="phone" placeholder="+91 98765 43210" />
+          </div>
+          <div class="form-group">
+            <label for="message">Message</label>
+            <textarea id="message" name="message" rows="5" placeholder="Tell us what you're working on..." required minlength="10"></textarea>
+          </div>
+          <div class="form-submit">
+            <button type="submit" class="btn btn-primary">Send Message →</button>
+          </div>
+          <div class="form-success" id="formSuccess">
+            ✅ Message sent! We'll get back to you within 24 hours.
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════ FINAL CTA -->
+<section class="final-cta">
+  <div class="container">
+    <div class="section-label reveal">
+      <span class="badge">🚀 Get Started</span>
+    </div>
+    <h2 class="reveal reveal-delay-1">Stop Rebuilding Context Every Day</h2>
+    <p class="reveal reveal-delay-2">Install CapsuleHub and bring your project knowledge wherever you work. One extension, every AI tool, zero friction.</p>
+    <div class="final-cta-btns reveal reveal-delay-3">
+      <a href="https://chromewebstore.google.com/detail/capsule-hub-by-tilantra/ngeoeefidomejcdhiecidpaalfoekjbh" target="_blank" class="btn btn-primary" style="font-size:1rem;padding:15px 30px;">
+        ⚡ Install Extension — It's Free
+      </a>
+      <a href="#pricing" class="btn btn-ghost">See Pricing</a>
+    </div>
+    <p class="cta-note">Free plan available · No credit card required · 2-minute setup</p>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════ FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="#" class="nav-logo">
+          <div class="nav-logo-icon">💊</div>
+          CapsuleHub
+        </a>
+        <p>The context-transfer layer for modern AI workflows. Capture once, reuse everywhere.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Product</h4>
+        <ul>
+          <li><a href="#features">Features</a></li>
+          <li><a href="#integrations">Integrations</a></li>
+          <li><a href="#pricing">Pricing</a></li>
+          <li><a href="https://capsulehub.ai" target="_blank">Changelog</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="#">About</a></li>
+          <li><a href="#">Blog</a></li>
+          <li><a href="#contact">Contact</a></li>
+          <li><a href="#">Careers</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Terms of Service</a></li>
+          <li><a href="#">Cookie Policy</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-copy">© 2026 CapsuleHub by Tilantra. All rights reserved.</span>
+      <div class="social-links">
+        <a href="#" class="social-link" aria-label="Twitter">𝕏</a>
+        <a href="#" class="social-link" aria-label="LinkedIn">in</a>
+        <a href="#" class="social-link" aria-label="GitHub">⌥</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- ══════════════════════════════════════════════════════ JS -->
+<script>
+  // Mobile menu
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobileMenu');
+  hamburger.addEventListener('click', () => {
+    mobileMenu.classList.toggle('open');
+  });
+  mobileMenu.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => mobileMenu.classList.remove('open'));
+  });
+
+  // Scroll reveal
+  const revealEls = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
+    });
+  }, { threshold: 0.12 });
+  revealEls.forEach(el => observer.observe(el));
+
+  // Billing toggle
+  const toggle = document.getElementById('billingToggle');
+  const saveBadge = document.getElementById('saveBadge');
+  let isYearly = false;
+  toggle.addEventListener('click', () => {
+    isYearly = !isYearly;
+    toggle.classList.toggle('active', isYearly);
+    saveBadge.style.display = isYearly ? 'none' : 'inline';
+    document.querySelectorAll('.amount').forEach(el => {
+      const val = isYearly ? el.dataset.yearly : el.dataset.monthly;
+      el.textContent = val === '0' ? '$0' : `$${val}`;
+    });
+    document.querySelectorAll('.price-val .period').forEach(el => {
+      el.textContent = isYearly ? '/month, billed yearly' : '/month';
+    });
+  });
+
+  // Contact form
+  document.getElementById('contactForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const name = document.getElementById('name');
+    const email = document.getElementById('email');
+    const message = document.getElementById('message');
+    let valid = true;
+
+    [name, email, message].forEach(field => {
+      if (!field.checkValidity()) {
+        field.style.borderColor = '#f87171';
+        valid = false;
+      } else {
+        field.style.borderColor = '';
+      }
+    });
+
+    if (valid) {
+      document.getElementById('formSuccess').style.display = 'block';
+      this.querySelectorAll('input,textarea,button').forEach(el => el.disabled = true);
+    }
+  });
+
+  // Smooth scroll on nav links
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const target = document.querySelector(a.getAttribute('href'));
+      if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth' }); }
+    });
+  });
+</script>
+
+</body>
+</html>
