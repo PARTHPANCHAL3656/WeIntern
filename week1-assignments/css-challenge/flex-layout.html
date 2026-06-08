@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CSS Challenge — Flexbox Layout</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg:        #f5f2ee;
+    --surface:   #ffffff;
+    --ink:       #1a1614;
+    --ink-soft:  #6b6460;
+    --accent:    #c0392b;
+    --accent-bg: #fdf0ee;
+    --border:    #e4dfd9;
+    --shadow:    rgba(26,22,20,0.08);
+    --serif:     'DM Serif Display', Georgia, serif;
+    --sans:      'DM Sans', system-ui, sans-serif;
+  }
+
+  body {
+    background: var(--bg);
+    font-family: var(--sans);
+    color: var(--ink);
+    min-height: 100vh;
+  }
+
+  /* ── PAGE HEADER ── */
+  header {
+    padding: 3.5rem 2rem 2rem;
+    text-align: center;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 4rem;
+  }
+
+  .chip {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    background: var(--accent-bg);
+    border: 1px solid rgba(192,57,43,0.18);
+    padding: 4px 12px;
+    border-radius: 100px;
+    margin-bottom: 1rem;
+  }
+
+  header h1 {
+    font-family: var(--serif);
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    color: var(--ink);
+    line-height: 1.1;
+    margin-bottom: 0.6rem;
+  }
+
+  header p {
+    font-size: 0.95rem;
+    color: var(--ink-soft);
+  }
+
+  /* ── SECTION LABEL ── */
+  .section-label {
+    text-align: center;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-bottom: 2.5rem;
+  }
+
+  .section-label span {
+    color: var(--accent);
+    font-weight: 600;
+  }
+
+  /* ══════════════════════════════════
+     FLEXBOX CARD ROW
+     - flex-wrap handles mobile stacking
+     - gap creates uniform spacing
+     - justify-content: center keeps
+       cards centered at any count
+  ══════════════════════════════════ */
+  .flex-container {
+    display: flex;
+    flex-wrap: wrap;             /* stack vertically on small screens */
+    justify-content: center;
+    align-items: stretch;        /* all cards same height in a row */
+    gap: 1.5rem;
+    padding: 0 2rem 5rem;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  /* ── CARD ── */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 2rem 1.75rem 1.75rem;
+
+    /* flex child: grows equally, min 260px before wrapping */
+    flex: 1 1 260px;
+    max-width: 340px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+
+    /* transition covers both transform and shadow */
+    transition:
+      transform  0.32s cubic-bezier(0.34, 1.56, 0.64, 1),
+      box-shadow 0.32s ease,
+      border-color 0.2s ease;
+  }
+
+  /* ── HOVER LIFT ── */
+  .card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 48px var(--shadow);
+    border-color: rgba(192,57,43,0.2);
+  }
+
+  /* ── AVATAR ── */
+  .card-avatar {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+    flex-shrink: 0;
+    transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1);
+  }
+
+  .card:hover .card-avatar {
+    transform: scale(1.12) rotate(-4deg);
+  }
+
+  .card-avatar.a { background: #fdf0ee; }
+  .card-avatar.b { background: #eef4fd; }
+  .card-avatar.c { background: #eefdf4; }
+
+  /* ── QUOTE MARK ── */
+  .quote-mark {
+    font-family: var(--serif);
+    font-size: 3rem;
+    color: var(--border);
+    line-height: 0.8;
+    margin-bottom: 0.25rem;
+    flex-shrink: 0;
+  }
+
+  /* ── CARD BODY ── */
+  .card-quote {
+    font-size: 0.92rem;
+    line-height: 1.7;
+    color: var(--ink-soft);
+    flex: 1; /* pushes footer to bottom */
+  }
+
+  /* ── CARD FOOTER ── */
+  .card-footer {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .card-name {
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--ink);
+  }
+
+  .card-role {
+    font-size: 0.78rem;
+    color: var(--ink-soft);
+  }
+
+  /* ── RATING DOTS ── */
+  .rating {
+    margin-left: auto;
+    display: flex;
+    gap: 3px;
+  }
+
+  .rating span {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    opacity: 0.2;
+    transition: opacity 0.2s ease;
+  }
+
+  .rating span.filled { opacity: 1; }
+
+  /* ══════════════════════════════════
+     MOBILE — stack cards vertically
+     below 640px
+  ══════════════════════════════════ */
+  @media (max-width: 640px) {
+    .flex-container {
+      flex-direction: column;
+      align-items: center;
+      padding: 0 1.25rem 4rem;
+    }
+
+    .card {
+      max-width: 100%;
+      width: 100%;
+    }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="chip">Flexbox Challenge</div>
+  <h1>What our clients<br>are saying.</h1>
+  <p>Three testimonial cards — flex row on desktop, stacked on mobile.</p>
+</header>
+
+<div class="section-label">
+  <span>justify-content: center</span> · <span>align-items: stretch</span> · <span>flex-wrap: wrap</span>
+</div>
+
+<!-- ══════════════════════════════
+     FLEXBOX CARD CONTAINER
+     Three cards in a row on desktop,
+     stacked vertically on mobile.
+══════════════════════════════ -->
+<div class="flex-container">
+
+  <div class="card">
+    <div class="card-avatar a">🎨</div>
+    <div class="quote-mark">"</div>
+    <p class="card-quote">
+      PIXEX translated our luxury brand perfectly into the digital space.
+      The performance is flawless, and the aesthetic is exactly what we
+      needed to elevate our presence.
+    </p>
+    <div class="card-footer">
+      <div>
+        <div class="card-name">Anshula R.</div>
+        <div class="card-role">Luxury Events</div>
+      </div>
+      <div class="rating">
+        <span class="filled"></span>
+        <span class="filled"></span>
+        <span class="filled"></span>
+        <span class="filled"></span>
+        <span class="filled"></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-avatar b">💻</div>
+    <div class="quote-mark">"</div>
+    <p class="card-quote">
+      The development speed and sheer attention to detail were incredible.
+      They didn't just write code — they understood our creative vision
+      and executed it perfectly.
+    </p>
+    <div class="card-footer">
+      <div>
+        <div class="card-name">Tripp C.</div>
+        <div class="card-role">Creative Strategy</div>
+      </div>
+      <div class="rating">
+        <span class="filled"></span>
+        <span class="filled"></span>
+        <span class="filled"></span>
+        <span class="filled"></span>
+        <span class="filled"></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-avatar c">🛒</div>
+    <div class="quote-mark">"</div>
+    <p class="card-quote">
+      Our e-commerce experience is now as premium as the products we sell.
+      The architecture is fast, and the user journey is seamless from
+      end to end.
+    </p>
+    <div class="card-footer">
+      <div>
+        <div class="card-name">Maya S.</div>
+        <div class="card-role">Amethyx · E-Commerce</div>
+      </div>
+      <div class="rating">
+        <span class="filled"></span>
+        <span class="filled"></span>
+        <span class="filled"></span>
+        <span class="filled"></span>
+        <span></span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>
