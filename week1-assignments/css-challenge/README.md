@@ -1,4 +1,9 @@
-# CSS Challenge — Task 3
+# CSS Challenge — Flexbox / Grid / Animations 
+
+![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)
+![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)
+![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
+![Vercel](https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white)
 
 > Task 3: CSS Challenge
 
@@ -11,8 +16,17 @@ Three focused CSS layout and animation challenges demonstrating Flexbox, CSS Gri
 
 > Task 3 - [CSS challenge](https://css-challenge-eight.vercel.app)
 
----
+## 📸 Project Screenshots:
 
+| Desktop View | Mobile View |
+|---|---|
+| ![Desktop](screenshots/flex-desktop.png) | ![Mobile](screenshots/flex-mobile.png) |
+
+| Grid layout Section | Animatins Section |
+|---|---|
+| ![Grid](screenshots/grid-layout.png) | ![Animations](screenshots/animation-demo.png) |
+
+---
 ## Folder Structure
 
 ```
@@ -209,21 +223,6 @@ All three files share a consistent visual language:
 
 Body text is `rgba(255,255,255,0.55)` — not pure white. Intentional: reduces harshness on dark backgrounds and reads as more refined.
 
----
-
-## Setup
-
-No build step. No dependencies. Open any file directly in a browser:
-
-```bash
-# Open in browser
-open flex-layout.html
-open grid-layout.html
-open animation-demo.html
-
-# Or serve locally
-npx serve .
-```
 
 Google Fonts (DM Sans + DM Serif Display) loads from CDN — requires internet connection on first open.
 
@@ -240,17 +239,6 @@ All CSS techniques used are supported in Chrome, Firefox, Safari, and Edge (2022
 - `backdrop-filter` — Chrome/Safari/Edge (not Firefox without flag)
 
 ---
-
-## Screenshots
-
-See `/screenshots` folder.
-
-| File | Description |
-|---|---|
-| `flex-desktop.png` | Three-card flex row at desktop width |
-| `flex-mobile.png` | Stacked cards at 375px |
-| `grid-layout.png` | Full 3-column dashboard grid |
-| `animation-demo.png` | Animation showcase — all five components |
 
 ## Author
 

@@ -1,5 +1,10 @@
 # Parth Panchal — Web Developer Portfolio
 
+![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)
+![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)
+![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
+![Vercel](https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white)
+
 > Week 1 · Task 1 · Web Developer Portfolio
 
 ## Objective
@@ -9,6 +14,16 @@ A personal portfolio website demonstrating frontend development skills — seman
 ## Deployments 
 
 > Task 1 - [Web Dev Portfolio](https://webdevportfolio-rho.vercel.app)
+
+## 📸 Project Screenshots:
+
+| Desktop View | Mobile View |
+|---|---|
+| ![Desktop](screenshots/portfolio-home-desktop.png) | ![Mobile](screenshots/portfolio-home-mobile.png) |
+
+| Projects Section | Contact Form |
+|---|---|
+| ![Projects](screenshots/portfolio-projects.png) | ![Contact](screenshots/portfolio-contact.png) |
 
 ## Tech Stack
 
@@ -55,25 +70,6 @@ webdev-portfolio/
 ├── screenshots/
 └── README.md
 ```
-
-## Setup
-
-No build step needed. Open any `.html` file directly in a browser, or serve with:
-
-```bash
-npx serve .
-```
-
-## Screenshots
-
-See `/screenshots` folder.
-
-| View | File |
-|---|---|
-| Desktop full page | `portfolio-home-desktop.png` |
-| Mobile view | `portfolio-home-mobile.png` |
-| Projects section | `portfolio-projects.png` |
-| Contact form | `portfolio-contact.png` |
 
 ## Author
 
