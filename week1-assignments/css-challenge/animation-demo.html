@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CSS Challenge — Animation Showcase</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg:       #0d0d0f;
+    --surface:  #141416;
+    --surface2: #1c1c1f;
+    --ink:      #ffffff;
+    --ink-soft: rgba(255,255,255,0.55);
+    --ink-dim:  rgba(255,255,255,0.2);
+    --accent:   #c0392b;
+    --border:   rgba(255,255,255,0.08);
+    --serif:    'DM Serif Display', Georgia, serif;
+    --sans:     'DM Sans', system-ui, sans-serif;
+    --mono:     'Courier New', monospace;
+  }
+
+  body {
+    background: var(--bg);
+    font-family: var(--sans);
+    color: var(--ink);
+    padding: 0 0 6rem;
+  }
+
+  /* ── HEADER ── */
+  header {
+    padding: 3.5rem 2rem 2.5rem;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 4rem;
+    text-align: center;
+  }
+
+  .chip {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    color: var(--accent);
+    border: 1px solid rgba(192,57,43,0.3);
+    padding: 3px 10px;
+    border-radius: 3px;
+    margin-bottom: 1rem;
+  }
+
+  header h1 {
+    font-family: var(--serif);
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    font-weight: 400;
+    line-height: 1.1;
+    margin-bottom: 0.6rem;
+  }
+
+  header p { font-size: 0.9rem; color: var(--ink-soft); }
+
+  /* ── WRAPPER ── */
+  .showcase {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 5rem;
+  }
+
+  /* ── BLOCK ── */
+  .block-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    color: var(--accent);
+    margin-bottom: 0.5rem;
+  }
+
+  .block-title {
+    font-family: var(--serif);
+    font-size: 1.5rem;
+    color: var(--ink);
+    margin-bottom: 0.5rem;
+  }
+
+  .block-desc {
+    font-size: 0.88rem;
+    color: var(--ink-soft);
+    margin-bottom: 2rem;
+    line-height: 1.6;
+  }
+
+  .demo-area {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 2.5rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    min-height: 140px;
+  }
+
+  /* ══════════════════════════════════════
+     A — BUTTON HOVER ANIMATIONS
+  ══════════════════════════════════════ */
+
+  /* Button 1: fill sweep */
+  .btn-sweep {
+    position: relative;
+    padding: 0.7rem 1.6rem;
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    color: var(--ink);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    background: transparent;
+    cursor: pointer;
+    overflow: hidden;
+    transition: color 0.3s ease, border-color 0.3s ease;
+  }
+
+  /* the fill layer slides in from left */
+  .btn-sweep::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--accent);
+    transform: translateX(-101%);
+    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 0;
+  }
+
+  .btn-sweep:hover::before { transform: translateX(0); }
+  .btn-sweep:hover { border-color: var(--accent); }
+
+  .btn-sweep span {
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Button 2: border draw */
+  .btn-border {
+    position: relative;
+    padding: 0.7rem 1.6rem;
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    color: var(--ink-soft);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    transition: color 0.2s ease;
+  }
+
+  .btn-border::before,
+  .btn-border::after {
+    content: '';
+    position: absolute;
+    transition: all 0.25s ease;
+  }
+
+  /* top + bottom borders */
+  .btn-border::before {
+    top: 0; left: 0;
+    width: 0; height: 1px;
+    background: var(--accent);
+  }
+
+  .btn-border::after {
+    bottom: 0; right: 0;
+    width: 0; height: 1px;
+    background: var(--accent);
+  }
+
+  /* left + right via extra spans */
+  .btn-border .bl, .btn-border .br {
+    position: absolute;
+    width: 1px;
+    height: 0;
+    background: var(--accent);
+    transition: height 0.25s ease 0.25s;
+  }
+
+  .btn-border .bl { top: 0; left: 0; }
+  .btn-border .br { bottom: 0; right: 0; }
+
+  .btn-border:hover::before  { width: 100%; }
+  .btn-border:hover::after   { width: 100%; }
+  .btn-border:hover .bl      { height: 100%; }
+  .btn-border:hover .br      { height: 100%; }
+  .btn-border:hover          { color: var(--ink); }
+
+  /* Button 3: arrow slide */
+  .btn-arrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 0.7rem 1.4rem;
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    color: var(--ink);
+    background: var(--accent);
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  .btn-arrow .ico {
+    display: inline-block;
+    transition: transform 0.32s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  .btn-arrow:hover .ico {
+    transform: rotate(-45deg) translate(2px, -2px);
+  }
+
+  /* ══════════════════════════════════════
+     B — LOADING SPINNER
+  ══════════════════════════════════════ */
+  .spinners {
+    display: flex;
+    align-items: center;
+    gap: 2.5rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  /* Spinner 1: arc */
+  .spinner-arc {
+    width: 40px;
+    height: 40px;
+    border: 2px solid rgba(192,57,43,0.15);
+    border-top-color: var(--accent);
+    border-radius: 50%;
+    animation: spin 0.9s linear infinite;
+  }
+
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+
+  /* Spinner 2: dots */
+  .spinner-dots {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+  }
+
+  .spinner-dots span {
+    width: 8px;
+    height: 8px;
+    background: var(--accent);
+    border-radius: 50%;
+    animation: bounce 1.2s ease-in-out infinite;
+  }
+
+  .spinner-dots span:nth-child(2) { animation-delay: 0.15s; }
+  .spinner-dots span:nth-child(3) { animation-delay: 0.3s; }
+
+  @keyframes bounce {
+    0%, 80%, 100% { transform: scale(0.6); opacity: 0.3; }
+    40%           { transform: scale(1.0); opacity: 1; }
+  }
+
+  /* Spinner 3: bars */
+  .spinner-bars {
+    display: flex;
+    gap: 4px;
+    align-items: flex-end;
+    height: 28px;
+  }
+
+  .spinner-bars span {
+    width: 4px;
+    background: var(--accent);
+    border-radius: 2px;
+    animation: barwave 1s ease-in-out infinite;
+  }
+
+  .spinner-bars span:nth-child(1) { animation-delay: 0s;    height: 60%; }
+  .spinner-bars span:nth-child(2) { animation-delay: 0.1s;  height: 80%; }
+  .spinner-bars span:nth-child(3) { animation-delay: 0.2s;  height: 100%; }
+  .spinner-bars span:nth-child(4) { animation-delay: 0.3s;  height: 80%; }
+  .spinner-bars span:nth-child(5) { animation-delay: 0.4s;  height: 60%; }
+
+  @keyframes barwave {
+    0%, 100% { transform: scaleY(0.4); opacity: 0.4; }
+    50%       { transform: scaleY(1.0); opacity: 1; }
+  }
+
+  /* ══════════════════════════════════════
+     C — FADE-IN CONTENT REVEAL
+     triggered by IntersectionObserver
+  ══════════════════════════════════════ */
+  .reveal-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+  }
+
+  @media (max-width: 600px) {
+    .reveal-grid { grid-template-columns: 1fr; }
+  }
+
+  .reveal-card {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.5rem;
+
+    /* start state */
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+
+  .reveal-card.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* stagger via transition-delay */
+  .reveal-card:nth-child(1) { transition-delay: 0s; }
+  .reveal-card:nth-child(2) { transition-delay: 0.1s; }
+  .reveal-card:nth-child(3) { transition-delay: 0.2s; }
+
+  .rc-icon { font-size: 1.75rem; margin-bottom: 0.75rem; }
+  .rc-title { font-size: 0.95rem; font-weight: 600; color: var(--ink); margin-bottom: 0.4rem; }
+  .rc-desc  { font-size: 0.82rem; color: var(--ink-soft); line-height: 1.6; }
+
+  /* ══════════════════════════════════════
+     D — CARD LIFT EFFECT
+  ══════════════════════════════════════ */
+  .lift-cards {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .lift-card {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.5rem;
+    width: 160px;
+    cursor: pointer;
+    transition:
+      transform  0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
+      box-shadow 0.35s ease,
+      border-color 0.2s ease;
+  }
+
+  .lift-card:hover {
+    transform: translateY(-10px) scale(1.02);
+    box-shadow:
+      0 12px 24px rgba(0,0,0,0.4),
+      0 0 0 1px rgba(192,57,43,0.25);
+    border-color: rgba(192,57,43,0.4);
+  }
+
+  .lift-card .lc-icon { font-size: 1.5rem; margin-bottom: 0.75rem; }
+  .lift-card .lc-label { font-size: 0.82rem; color: var(--ink-soft); }
+
+  /* ══════════════════════════════════════
+     E — ANIMATED UNDERLINE NAV
+  ══════════════════════════════════════ */
+  .nav-demo {
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .nav-link {
+    position: relative;
+    font-size: 14px;
+    color: var(--ink-soft);
+    text-decoration: none;
+    padding-bottom: 4px;
+    cursor: pointer;
+    transition: color 0.2s ease;
+  }
+
+  /* underline: wipes left-to-right on hover */
+  .nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0;
+    width: 0;
+    height: 1px;
+    background: var(--accent);
+    transition: width 0.3s ease;
+  }
+
+  .nav-link:hover { color: var(--ink); }
+  .nav-link:hover::after { width: 100%; }
+
+  /* active state: always underlined */
+  .nav-link.active {
+    color: var(--ink);
+  }
+
+  .nav-link.active::after {
+    width: 100%;
+  }
+
+  /* ══════════════════════════════════════
+     HEADING WORD-SLIDE (hero example)
+  ══════════════════════════════════════ */
+  .headline-demo {
+    text-align: center;
+    padding: 1rem;
+  }
+
+  .hl-line {
+    display: block;
+    overflow: hidden;
+  }
+
+  .hl-word {
+    display: inline-block;
+    font-family: var(--serif);
+    font-size: clamp(1.8rem, 5vw, 3rem);
+    color: var(--ink);
+    margin-right: 0.2em;
+    transform: translateY(110%);
+    animation: wordUp 0.75s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  /* stagger */
+  .hl-word:nth-child(1) { animation-delay: 0.1s; }
+  .hl-word:nth-child(2) { animation-delay: 0.2s; }
+  .hl-word:nth-child(3) { animation-delay: 0.3s; color: var(--accent); }
+  .hl-word:nth-child(4) { animation-delay: 0.4s; }
+  .hl-word:nth-child(5) { animation-delay: 0.5s; }
+
+  @keyframes wordUp {
+    to { transform: translateY(0); }
+  }
+
+  .replay-hint {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--ink-dim);
+    text-align: center;
+    margin-top: 0.75rem;
+    cursor: pointer;
+    letter-spacing: 0.08em;
+  }
+
+  .replay-hint:hover { color: var(--ink-soft); }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="chip">Animation Challenge</div>
+  <h1>CSS Animations<br>Showcase</h1>
+  <p>Five animation components — transitions, keyframes, and IntersectionObserver.</p>
+</header>
+
+<div class="showcase">
+
+  <!-- A — BUTTON HOVER ANIMATIONS -->
+  <div>
+    <div class="block-label">A — Button Hover Animations</div>
+    <div class="block-title">Three button states</div>
+    <div class="block-desc">
+      Fill sweep (::before translateX), border draw (four-sided pseudo-element), and arrow spring (rotate + cubic-bezier).
+      Each uses a different CSS technique for hover feedback.
+    </div>
+    <div class="demo-area">
+      <button class="btn-sweep"><span>Fill Sweep →</span></button>
+      <button class="btn-border">
+        <span class="bl"></span>
+        <span class="br"></span>
+        Border Draw
+      </button>
+      <button class="btn-arrow">Start Project <span class="ico">↗</span></button>
+    </div>
+  </div>
+
+  <!-- B — LOADING SPINNERS -->
+  <div>
+    <div class="block-label">B — Loading Spinners</div>
+    <div class="block-title">Three spinner variants</div>
+    <div class="block-desc">
+      Arc spinner (border-top + rotate keyframe), dot pulse (scale + opacity bounce), and bar wave (scaleY sine wave).
+      All pure CSS @keyframes, no JavaScript.
+    </div>
+    <div class="demo-area">
+      <div class="spinners">
+        <div class="spinner-arc"></div>
+        <div class="spinner-dots">
+          <span></span><span></span><span></span>
+        </div>
+        <div class="spinner-bars">
+          <span></span><span></span><span></span><span></span><span></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- C — FADE-IN CONTENT REVEAL -->
+  <div>
+    <div class="block-label">C — Fade-In Content Reveal</div>
+    <div class="block-title">Scroll-triggered reveal</div>
+    <div class="block-desc">
+      Cards start at opacity:0 and translateY(20px). IntersectionObserver adds .visible when 15% of the element enters the viewport.
+      Staggered transition-delay creates a cascade effect.
+    </div>
+    <div class="reveal-grid">
+      <div class="reveal-card" id="rc1">
+        <div class="rc-icon">⚡</div>
+        <div class="rc-title">Web Development</div>
+        <div class="rc-desc">Fast, scalable, production-ready apps.</div>
+      </div>
+      <div class="reveal-card" id="rc2">
+        <div class="rc-icon">🎨</div>
+        <div class="rc-title">Interface Design</div>
+        <div class="rc-desc">Hierarchy and components done right.</div>
+      </div>
+      <div class="reveal-card" id="rc3">
+        <div class="rc-icon">🤖</div>
+        <div class="rc-title">Applied AI</div>
+        <div class="rc-desc">LLM pipelines and workflow automation.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- D — CARD LIFT -->
+  <div>
+    <div class="block-label">D — Card Lift Effect</div>
+    <div class="block-title">Hover elevation</div>
+    <div class="block-desc">
+      Cards lift with translateY(-10px) scale(1.02) on hover.
+      The cubic-bezier(0.34, 1.56, 0.64, 1) overshoot gives the spring bounce.
+      Box-shadow depth increases simultaneously.
+    </div>
+    <div class="demo-area">
+      <div class="lift-cards">
+        <div class="lift-card"><div class="lc-icon">🚀</div><div class="lc-label">Deploy</div></div>
+        <div class="lift-card"><div class="lc-icon">🔐</div><div class="lc-label">Security</div></div>
+        <div class="lift-card"><div class="lc-icon">📊</div><div class="lc-label">Analytics</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- E — UNDERLINE NAV + WORD SLIDE -->
+  <div>
+    <div class="block-label">E — Navigation & Headline</div>
+    <div class="block-title">Underline wipe + word slide-up</div>
+    <div class="block-desc">
+      Nav links use a ::after pseudo-element with width: 0 → 100% on hover.
+      Headline words use overflow:hidden parent + translateY(110%) → translateY(0) with staggered animation-delay.
+      Click to replay the headline.
+    </div>
+    <div class="demo-area" style="flex-direction:column; gap:2rem">
+      <!-- nav demo -->
+      <div class="nav-demo">
+        <a class="nav-link active">Services</a>
+        <a class="nav-link">Work</a>
+        <a class="nav-link">Process</a>
+        <a class="nav-link">Contact</a>
+        <a class="nav-link">Lab</a>
+      </div>
+      <!-- word reveal demo -->
+      <div class="headline-demo" id="headlineDemo">
+        <div class="hl-line">
+          <span class="hl-word">Design</span>
+          <span class="hl-word">that</span>
+          <span class="hl-word">ships.</span>
+        </div>
+      </div>
+      <div class="replay-hint" id="replayBtn">↺ replay headline</div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  /* ── Scroll Reveal (IntersectionObserver) ── */
+  const revealCards = document.querySelectorAll('.reveal-card');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
+
+  revealCards.forEach(el => observer.observe(el));
+
+  /* ── Headline replay ── */
+  const replayBtn = document.getElementById('replayBtn');
+  const headlineDemo = document.getElementById('headlineDemo');
+
+  replayBtn.addEventListener('click', () => {
+    // rebuild the headline HTML to restart animations
+    headlineDemo.innerHTML = `
+      <div class="hl-line">
+        <span class="hl-word">Design</span>
+        <span class="hl-word">that</span>
+        <span class="hl-word">ships.</span>
+      </div>`;
+  });
+</script>
+
+</body>
+</html>
