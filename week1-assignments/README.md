@@ -24,18 +24,18 @@ week1-assignments
     └── assets/
         ├── images/
 ├── screenshots/
+        ├── portfolio-home-desktop.png
+        ├── portfolio-home-mobile.png
+        ├── portfolio-projects.png
+        ├── portfolio-contact.png
+        ├── landing-desktop.png
+        ├── landing-hero-mobile.png
+        ├── landing-services.png 
+        ├── landing-contact-form.png
         ├── flex-desktop.png
         ├── flex-mobile.png
         ├── grid-layout.png
-        ├── animation-demo.png
-        ├──landing-desktop.png
-        ├──landing-hero-mobile.png
-        ├──landing-services.png 
-        ├──landing-contact-form.png
-        ├──flex-desktop.png
-        ├──flex-mobile.png
-        ├──grid-layout.png
-        └──animation-demo.png
+        └── animation-demo.png
 └── README.md
 ```
 # Screenshots
