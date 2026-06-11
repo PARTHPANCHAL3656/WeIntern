@@ -3,9 +3,187 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <meta name="description" content="Contact PromptRank AI — request a free AI visibility audit or get in touch with our team.">
+  <title>Contact — PromptRank AI</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/contact.css">
 </head>
-<body>
-  
+<body class="page-offset">
+
+  <!-- NAV -->
+  <nav class="nav" role="navigation" aria-label="Main navigation">
+    <div class="nav__inner">
+      <a href="index.html" class="nav__logo"><span class="nav__logo-dot"></span>PromptRank AI</a>
+      <ul class="nav__links" role="list">
+        <li><a href="index.html" class="nav__link">Home</a></li>
+        <li><a href="about.html" class="nav__link">About</a></li>
+        <li><a href="services.html" class="nav__link">Services</a></li>
+        <li><a href="contact.html" class="nav__link">Contact</a></li>
+      </ul>
+      <a href="contact.html" class="btn btn-primary nav__cta">Get Started</a>
+      <button class="nav__hamburger" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+  <nav class="nav__mobile" aria-label="Mobile navigation">
+    <a href="index.html" class="nav__mobile-link">Home</a>
+    <a href="about.html" class="nav__mobile-link">About</a>
+    <a href="services.html" class="nav__mobile-link">Services</a>
+    <a href="contact.html" class="nav__mobile-link">Contact</a>
+    <a href="contact.html" class="btn btn-primary" style="margin-top:8px;justify-content:center;">Get Started</a>
+  </nav>
+
+  <!-- PAGE HERO -->
+  <section class="contact-hero section">
+    <div class="container">
+      <div class="contact-hero__content reveal">
+        <p class="label">Get In Touch</p>
+        <h1 class="mt-sm">Let's get you<br><em style="font-style:italic;color:var(--secondary)">recommended.</em></h1>
+        <div class="divider" style="margin-top:var(--sp-sm)"></div>
+        <p class="body-lg text-muted mt-md">
+          Start with a free AI visibility audit or reach out to our team.
+          We typically respond within one business day.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT MAIN -->
+  <section class="section section--alt">
+    <div class="container">
+      <div class="contact-grid">
+
+        <!-- FORM -->
+        <div class="contact-form-wrap reveal">
+          <h2 style="font-size:1.25rem;font-weight:600;margin-bottom:var(--sp-md);">Send us a message</h2>
+          <form id="contact-form" class="contact-form" novalidate>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="name" class="form-label">Full Name <span class="form-required">*</span></label>
+                <input type="text" id="name" name="name" class="form-input" placeholder="Aryan Rao" required autocomplete="name">
+              </div>
+              <div class="form-group">
+                <label for="email" class="form-label">Email Address <span class="form-required">*</span></label>
+                <input type="email" id="email" name="email" class="form-input" placeholder="aryan@company.com" required autocomplete="email">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="company" class="form-label">Company Name <span class="form-required">*</span></label>
+              <input type="text" id="company" name="company" class="form-input" placeholder="Your Company" required autocomplete="organization">
+            </div>
+            <div class="form-group">
+              <label for="website" class="form-label">Website URL</label>
+              <input type="url" id="website" name="website" class="form-input" placeholder="https://yourcompany.com" autocomplete="url">
+            </div>
+            <div class="form-group">
+              <label for="service" class="form-label">I'm interested in</label>
+              <select id="service" name="service" class="form-input form-select">
+                <option value="">Select a service</option>
+                <option value="audit">AI Visibility Audit</option>
+                <option value="competitor">Competitor Recommendation Analysis</option>
+                <option value="citation">Citation Optimization</option>
+                <option value="prompt">Prompt Intelligence</option>
+                <option value="score">AI Discoverability Score</option>
+                <option value="enterprise">Enterprise / Custom</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="message" class="form-label">Message <span class="form-required">*</span></label>
+              <textarea id="message" name="message" class="form-input form-textarea" placeholder="Tell us about your company and what you're trying to solve..." rows="5" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary form-submit">Send Message</button>
+            <p class="form-note mono text-muted">We respond within 1 business day. No spam, ever.</p>
+          </form>
+        </div>
+
+        <!-- SIDEBAR -->
+        <div class="contact-sidebar">
+          <div class="contact-info-card card reveal reveal-delay-1">
+            <h3>What happens next?</h3>
+            <ol class="contact-steps">
+              <li>
+                <div class="contact-step__num">1</div>
+                <div>
+                  <strong>We review your website</strong>
+                  <p class="text-muted" style="font-size:0.85rem;margin-top:4px;">Our team runs a preliminary AI visibility scan within 24 hours.</p>
+                </div>
+              </li>
+              <li>
+                <div class="contact-step__num">2</div>
+                <div>
+                  <strong>You get a preview report</strong>
+                  <p class="text-muted" style="font-size:0.85rem;margin-top:4px;">A brief snapshot of your current AI visibility score and 3 key gaps.</p>
+                </div>
+              </li>
+              <li>
+                <div class="contact-step__num">3</div>
+                <div>
+                  <strong>We walk you through it</strong>
+                  <p class="text-muted" style="font-size:0.85rem;margin-top:4px;">A 30-minute call to discuss findings and whether we're a fit.</p>
+                </div>
+              </li>
+            </ol>
+          </div>
+
+          <div class="contact-info-card card reveal reveal-delay-2" style="margin-top:var(--sp-md)">
+            <h3>Prefer a direct line?</h3>
+            <ul class="contact-direct-list">
+              <li>
+                <span class="contact-direct-icon">✉️</span>
+                <div>
+                  <p class="form-label" style="margin-bottom:2px;">Email</p>
+                  <a href="mailto:hello@promptrank.ai" class="text-teal" style="font-size:0.9rem;">hello@promptrank.ai</a>
+                </div>
+              </li>
+              <li>
+                <span class="contact-direct-icon">🕐</span>
+                <div>
+                  <p class="form-label" style="margin-bottom:2px;">Response Time</p>
+                  <p style="font-size:0.9rem;color:var(--on-surface-var);">Within 1 business day</p>
+                </div>
+              </li>
+              <li>
+                <span class="contact-direct-icon">🌏</span>
+                <div>
+                  <p class="form-label" style="margin-bottom:2px;">Timezone</p>
+                  <p style="font-size:0.9rem;color:var(--on-surface-var);">IST (Mon–Fri, 9 AM – 6 PM)</p>
+                </div>
+              </li>
+            </ul>
+          </div>
+
+          <div class="contact-info-card card reveal reveal-delay-3" style="margin-top:var(--sp-md);background:var(--primary);border-color:var(--primary);">
+            <p class="mono" style="color:rgba(255,255,255,0.5);margin-bottom:8px;">Free offer</p>
+            <h3 style="color:#fff;margin-bottom:var(--sp-sm);">Get your AI Visibility Score</h3>
+            <p style="color:rgba(255,255,255,0.7);font-size:0.9rem;line-height:1.6;">
+              Every inquiry includes a complimentary score for your website — no strings attached.
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__grid">
+        <div class="footer__brand">
+          <div class="footer__logo"><span class="footer__logo-dot"></span>PromptRank AI</div>
+          <p class="footer__tagline">SEO for the AI era.</p>
+          <p class="footer__desc">Helping businesses become visible inside AI tools like ChatGPT, Claude, Gemini, and Perplexity.</p>
+        </div>
+        <div class="footer__col"><h4>Product</h4><ul><li><a href="services.html">AI Visibility Audit</a></li><li><a href="services.html">Competitor Analysis</a></li><li><a href="services.html">Prompt Intelligence</a></li><li><a href="index.html#pricing">Pricing</a></li></ul></div>
+        <div class="footer__col"><h4>Company</h4><ul><li><a href="about.html">About</a></li><li><a href="contact.html">Contact</a></li></ul></div>
+        <div class="footer__col"><h4>AI Platforms</h4><ul><li><a href="#">ChatGPT Visibility</a></li><li><a href="#">Claude Visibility</a></li><li><a href="#">Gemini Visibility</a></li><li><a href="#">Perplexity Visibility</a></li></ul></div>
+      </div>
+      <div class="footer__bottom">
+        <span>© 2025 PromptRank AI. All rights reserved.</span>
+        <span>Built for the AI era.</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
 </body>
 </html>
