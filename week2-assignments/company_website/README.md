@@ -1,5 +1,30 @@
 # PromptRank AI — Company Website
 
+![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)
+![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)
+![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
+![Vercel](https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white)
+
+> Week 2 · Task 1 · Company Website
+
+## Objective
+
+A personal portfolio website demonstrating frontend development skills — semantic HTML5, responsive CSS3, Flexbox/Grid layouts, and vanilla JavaScript interactions.
+
+## Deployments 
+
+> Task 1 - [Web Dev Portfolio](https://webdevportfolio-rho.vercel.app)
+
+## 📸 Project Screenshots:
+
+| Desktop View | Mobile View |
+|---|---|
+| ![Desktop](screenshots/portfolio-home-desktop.png) | ![Mobile](screenshots/portfolio-home-mobile.png) |
+
+| Projects Section | Contact Form |
+|---|---|
+| ![Projects](screenshots/portfolio-projects.png) | ![Contact](screenshots/portfolio-contact.png) |
+
 > **Task 1 · WeIntern Full Stack Development · Week 2**
 
 SEO for the AI era. A fully responsive, multi-page company website for PromptRank AI — a platform that helps businesses get recommended by ChatGPT, Claude, Gemini, and Perplexity.

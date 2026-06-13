@@ -1,0 +1,86 @@
+{
+  "info": {
+    "name": "PromptRank HR API",
+    "_postman_id": "promptrank-hr-collection",
+    "description": "CRUD endpoints for Employee Management System",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "BASE_URL",
+      "value": "http://localhost:5000",
+      "description": "Change to your Vercel URL after deployment"
+    },
+    {
+      "key": "EMPLOYEE_ID",
+      "value": "",
+      "description": "Paste a MongoDB _id here after creating an employee"
+    }
+  ],
+  "item": [
+    {
+      "name": "Get All Employees",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "{{BASE_URL}}/api/employees",
+          "host": ["{{BASE_URL}}"],
+          "path": ["api", "employees"]
+        },
+        "description": "Returns all employees sorted by newest first"
+      }
+    },
+    {
+      "name": "Create Employee",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "url": {
+          "raw": "{{BASE_URL}}/api/employees",
+          "host": ["{{BASE_URL}}"],
+          "path": ["api", "employees"]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Parth Panchal\",\n  \"department\": \"Engineering\",\n  \"role\": \"Frontend Developer\",\n  \"salary\": 50000,\n  \"joinDate\": \"2026-06-01\"\n}",
+          "options": { "raw": { "language": "json" } }
+        },
+        "description": "Creates a new employee record. Copy the returned _id into EMPLOYEE_ID variable."
+      }
+    },
+    {
+      "name": "Update Employee",
+      "request": {
+        "method": "PUT",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "url": {
+          "raw": "{{BASE_URL}}/api/employees/{{EMPLOYEE_ID}}",
+          "host": ["{{BASE_URL}}"],
+          "path": ["api", "employees", "{{EMPLOYEE_ID}}"]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Parth Panchal\",\n  \"department\": \"Engineering\",\n  \"role\": \"Full Stack Developer\",\n  \"salary\": 75000,\n  \"joinDate\": \"2026-06-01\"\n}",
+          "options": { "raw": { "language": "json" } }
+        },
+        "description": "Updates an existing employee. Set EMPLOYEE_ID variable first."
+      }
+    },
+    {
+      "name": "Delete Employee",
+      "request": {
+        "method": "DELETE",
+        "url": {
+          "raw": "{{BASE_URL}}/api/employees/{{EMPLOYEE_ID}}",
+          "host": ["{{BASE_URL}}"],
+          "path": ["api", "employees", "{{EMPLOYEE_ID}}"]
+        },
+        "description": "Permanently deletes an employee. Set EMPLOYEE_ID variable first."
+      }
+    }
+  ]
+}
