@@ -14,6 +14,17 @@ A secure full-stack authentication system with user registration, login, JWT-bas
 
 ---
 
+## 📸 Project Screenshots:
+
+| Desktop View | Mobile View |
+|---|---|
+| ![Desktop](screenshots/portfolio-home-desktop.png) | ![Mobile](screenshots/portfolio-home-mobile.png) |
+
+| Projects Section | Contact Form |
+|---|---|
+| ![Projects](screenshots/portfolio-projects.png) | ![Contact](screenshots/portfolio-contact.png) |
+
+---
 ## Features
 
 - ✅ User registration with username, email, and password
