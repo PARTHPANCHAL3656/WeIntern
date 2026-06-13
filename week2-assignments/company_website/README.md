@@ -19,11 +19,11 @@ A personal portfolio website demonstrating frontend development skills — seman
 
 | Desktop View | Mobile View |
 |---|---|
-| ![Desktop](screenshots/portfolio-home-desktop.png) | ![Mobile](screenshots/portfolio-home-mobile.png) |
+| ![Desktop](screenshots/company_home.png) | ![Mobile](screenshots/company_mobile.png) |
 
 | Projects Section | Contact Form |
 |---|---|
-| ![Projects](screenshots/portfolio-projects.png) | ![Contact](screenshots/portfolio-contact.png) |
+| ![Projects](screenshots/company_services.png) | ![Contact](screenshots/company_contact.png) |
 
 > **Task 1 · WeIntern Full Stack Development · Week 2**
 
