@@ -163,13 +163,19 @@ body {
 .search-wrap {
   flex: 1;
   min-width: 200px;
-  position: relative;
   display: flex;
   align-items: center;
+  gap: 8px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 0 12px;
+  transition: border-color 0.15s;
+}
+.search-wrap:focus-within {
+  border-color: var(--border-focus);
 }
 .search-icon {
-  position: absolute;
-  left: 12px;
   width: 16px;
   height: 16px;
   color: var(--text-3);
@@ -177,20 +183,17 @@ body {
   flex-shrink: 0;
 }
 .search-input {
-  width: 100%;
+  flex: 1;
   height: 40px;
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
+  background: transparent;
+  border: none;
   color: var(--text-1);
   font-family: inherit;
   font-size: 13px;
-  padding: 0 12px 0 38px;
+  padding: 0;
   outline: none;
-  transition: border-color 0.15s;
 }
 .search-input::placeholder { color: var(--text-3); }
-.search-input:focus { border-color: var(--border-focus); }
 
 /* ── Buttons ───────────────────────────────────────────────────── */
 .btn {
@@ -325,22 +328,10 @@ body {
 }
 .emp-table tbody tr:last-child td { border-bottom: none; }
 .emp-table tbody tr {
-  transition: background 0.1s;
-  position: relative;
+  transition: box-shadow 0.15s;
 }
 .emp-table tbody tr:hover td { background: var(--bg-hover); }
-
-/* Signature element: left-border accent stripe on row hover */
-.emp-table tbody tr::before {
-  content: '';
-  position: absolute;
-  left: 0; top: 0; bottom: 0;
-  width: 3px;
-  background: var(--accent);
-  opacity: 0;
-  transition: opacity 0.15s;
-}
-.emp-table tbody tr:hover::before { opacity: 1; }
+.emp-table tbody tr:hover { box-shadow: inset 3px 0 0 var(--accent); }
 
 .td-name { font-weight: 600; }
 
